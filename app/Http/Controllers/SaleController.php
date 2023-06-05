@@ -15,7 +15,7 @@ class SaleController extends Controller
 {
     public function index()
     {
-        $products = Product::where('stock', '>', '0')->get();
+        $products = Product::where('stock', '>', '0') ->orWhere('category_id', '=', 1)->get();
         $employees = Employee::all();
         $sales = Sale::all();
         return view('sales.index', compact('products', 'employees', 'sales'));
