@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\RevisionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,3 +48,8 @@ Route::get('sales/show/{id}', [SaleController::class, 'show'])->name('sales.show
 Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
 Route::post('orders', [OrderController::class, 'store'])->name('orders.store');
 Route::get('orders/{id}', [OrderController::class, 'show'])->name('orders.show');
+
+// revisiones tecnicas
+Route::get('revisiones', [RevisionController::class, 'index'])->name('revisiones.index');
+Route::post('revisiones', [RevisionController::class, 'store'])->name('revisiones.store');
+Route::get('revisiones/show/{id}', [RevisionController::class, 'show'])->name('revisiones.show');

@@ -82,6 +82,9 @@
                         <a class="nav-link" href="{{ route('sales.index') }}">Ventas</a>
                     </li>
                     <li class="nav-item active">
+                        <a class="nav-link" href="{{ route('revisiones.index') }}">Revisión Técnica</a>
+                    </li>
+                    <li class="nav-item active">
                         <a class="nav-link" href="#">Caja</a>
                     </li>
                     <li class="nav-item dropdown">

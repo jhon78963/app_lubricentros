@@ -684,7 +684,6 @@
                         text: prod_name
                     });
                     select.append(nuevaOpcion);
-                    select.trigger('change');
                 },
                 complete: function() {
                     $('#guardar').text('REGISTRAR');

@@ -28,4 +28,8 @@ Route::get('product/order/{id}', function($id){
     return DB::table('products')->where('id', $id)->get();
 });
 
+Route::get('vehiculo/{id}', function($id){
+    return DB::table('vehiculos')->where('placa', $id)->first();
+});
+
 Route::get('/consulta-dni/{cust_dni}', [App\Http\Controllers\ConsultaController::class, 'consultaDNI']);

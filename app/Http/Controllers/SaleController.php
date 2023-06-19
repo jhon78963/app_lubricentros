@@ -78,7 +78,6 @@ class SaleController extends Controller
             $detalle_sd->product_id = $request->sale_prod_ids[$i];
             $detalle_sd->unit_price = $request->sale_unitprices[$i];
             $detalle_sd->quantity = $request->sale_quantities[$i];
-            $detalle_sd->totalprice = $request->sale_total_prices[$i];
             $detalle_sd->save();
             DB::table('products')->where('id', $request->sale_prod_ids[$i])->decrement('stock', $request->sale_quantities[$i]);
         }
@@ -95,7 +94,7 @@ class SaleController extends Controller
         $sale_details = DB::table('sale_details as sd')
             ->join('products as p', 'sd.product_id', 'p.id')
             ->where('sd.sale_id', $id)
-            ->select('sd.quantity', 'p.name', 'p.id', 'sd.totalprice')
+            ->select('sd.quantity', 'p.name', 'p.id', DB::raw('sd.quantity * sd.unit_price as totalprice'))
             ->get();
         $sale = Sale::findOrFail($id);
         if($sale->sale_id < 10){

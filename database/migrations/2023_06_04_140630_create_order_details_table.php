@@ -11,8 +11,7 @@ return new class extends Migration
         Schema::create('order_details', function (Blueprint $table) {
             $table->integer('order_id')->nullable();
             $table->foreign('order_id')->references('id')->on('orders');
-            $table->integer('product_id')->nullable();
-            $table->foreign('product_id')->references('id')->on('products');
+            $table->bigInteger('product_id')->nullable();
             $table->primary(['order_id','product_id']);
             $table->string('product_name');
             $table->integer('quantity');
