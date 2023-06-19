@@ -97,6 +97,20 @@
                         </div>
                     </li>
                 </ul>
+                <!-- Right navbar links -->
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown active">
+                        <a class="nav-link dropdown-toggle user-profile" href="#" role="button"
+                            data-toggle="dropdown" aria-expanded="false"><img
+                                src="{{ asset($usuario->profilePicture) }}" alt=""
+                                id="photo_navbar">{{ $usuario->username }}
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">Perfil</a>
+                            <a class="dropdown-item" href="{{ route('login.cerrarSesion') }}">Cerrar Sesion</a>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </nav>
         <hr>

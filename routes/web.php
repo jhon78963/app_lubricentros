@@ -1,11 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RevisionController;
+use App\Http\Controllers\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,8 +21,18 @@ use App\Http\Controllers\RevisionController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
+});
+
+Route::middleware(['auth'])->get('/bienvenido', function () {
+    $usuario = Auth::user();
+    return view('welcome', compact('usuario'));
 })->name('welcome.index');
+
+// Login
+Route::get('login', [LoginController::class, 'index'])->name('login.index');
+Route::post('login/validar', [LoginController::class, 'validarCredenciales'])->name('login.validar');
+Route::get('login/cerrarSesion', [LoginController::class, 'cerrarSesion'])->name('login.cerrarSesion');
 
 // Categories
 Route::get('categories', [CategoryController::class, 'index'])->name('categories.index');
