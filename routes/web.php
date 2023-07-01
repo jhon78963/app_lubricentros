@@ -8,6 +8,10 @@ use App\Http\Controllers\SaleController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RevisionController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\SupplierController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +38,30 @@ Route::get('login', [LoginController::class, 'index'])->name('login.index');
 Route::post('login/validar', [LoginController::class, 'validarCredenciales'])->name('login.validar');
 Route::get('login/cerrarSesion', [LoginController::class, 'cerrarSesion'])->name('login.cerrarSesion');
 
+//Customers
+Route::get('customers', [CustomerController::class, 'index'])->name('customers.index');
+Route::get('customers/create', [CustomerController::class, 'create'])->name('customers.create');
+Route::post('customers', [CustomerController::class, 'store'])->name('customers.store');
+Route::get('customers/{id}/edit', [CustomerController::class, 'edit'])->name('customers.edit');
+Route::post('customers/actualizar', [CustomerController::class, 'actualizar'])->name('customers.actualizar');
+Route::get('customers/eliminar/{id}', [CustomerController::class, 'eliminar'])->name('customers.eliminar');
+
+//Employees
+Route::get('employees', [EmployeeController::class, 'index'])->name('employees.index');
+Route::get('employees/create', [EmployeeController::class, 'create'])->name('employees.create');
+Route::post('employees', [EmployeeController::class, 'store'])->name('employees.store');
+Route::get('employees/{id}/edit', [EmployeeController::class, 'edit'])->name('employees.edit');
+Route::post('employees/actualizar', [EmployeeController::class, 'actualizar'])->name('employees.actualizar');
+Route::get('employees/eliminar/{id}', [EmployeeController::class, 'eliminar'])->name('employees.eliminar');
+
+//Suppliers
+Route::get('suppliers', [SupplierController::class, 'index'])->name('suppliers.index');
+Route::get('suppliers/create', [SupplierController::class, 'create'])->name('suppliers.create');
+Route::post('suppliers', [SupplierController::class, 'store'])->name('suppliers.store');
+Route::get('suppliers/{id}/edit', [SupplierController::class, 'edit'])->name('suppliers.edit');
+Route::post('suppliers/actualizar', [SupplierController::class, 'actualizar'])->name('suppliers.actualizar');
+Route::get('suppliers/eliminar/{id}', [SupplierController::class, 'eliminar'])->name('suppliers.eliminar');
+
 // Categories
 Route::get('categories', [CategoryController::class, 'index'])->name('categories.index');
 Route::get('categories/create', [CategoryController::class, 'create'])->name('categories.create');
@@ -48,7 +76,7 @@ Route::get('products/create', [ProductController::class, 'create'])->name('produ
 Route::post('products', [ProductController::class, 'store'])->name('products.store');
 Route::get('products/{id}/edit', [ProductController::class, 'edit'])->name('products.edit');
 Route::post('products/actualizar', [ProductController::class, 'actualizar'])->name('products.actualizar');
-Route::get('products/eliminar/{id}', [App\Http\Controllers\ProductController::class, 'eliminar'])->name('products.eliminar');
+Route::get('products/eliminar/{id}', [ProductController::class, 'eliminar'])->name('products.eliminar');
 
 
 // sales
@@ -65,3 +93,10 @@ Route::get('orders/{id}', [OrderController::class, 'show'])->name('orders.show')
 Route::get('revisiones', [RevisionController::class, 'index'])->name('revisiones.index');
 Route::post('revisiones', [RevisionController::class, 'store'])->name('revisiones.store');
 Route::get('revisiones/show/{id}', [RevisionController::class, 'show'])->name('revisiones.show');
+
+// pdf reports
+Route::get('download-sales/{id}', [ReportController::class, 'salePDF'])->name('sales.pdf');
+Route::get('download-revisiones/{id}', [ReportController::class, 'revisionPDF'])->name('revisiones.pdf');
+
+// view n graphics reports
+Route::get('/reporte-ventas', [ReportController::class, 'venta'])->name('reports.sale');

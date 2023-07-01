@@ -65,7 +65,7 @@ function mesVentaCambio() {
         if (mes !=0) {
             var html_select = '<option value="0">Seleccione personal</option>'
             for (var i = 0; i < data.length; i++)
-                html_select += '<option value="' + data[i].empl_id + '">' + data[i].empl_fullName + '</option>';
+                html_select += '<option value="' + data[i].employee_id + '">' + data[i].empl_fullName + '</option>';
             $('#select-empl_id_sale').html(html_select);
         } else {
             var html_select = '<option value="0">Seleccione personal</option>'

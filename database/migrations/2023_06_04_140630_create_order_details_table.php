@@ -9,9 +9,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('order_details', function (Blueprint $table) {
-            $table->integer('order_id')->nullable();
+            $table->unsignedBigInteger('order_id')->nullable();
             $table->foreign('order_id')->references('id')->on('orders');
-            $table->bigInteger('product_id')->nullable();
+            $table->unsignedBigInteger('product_id')->nullable();
             $table->primary(['order_id','product_id']);
             $table->string('product_name');
             $table->integer('quantity');

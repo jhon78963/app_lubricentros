@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Product;
 use App\Models\Category;
@@ -31,7 +32,8 @@ class ProductController extends Controller
         $categories = Category::all();
         $products = Product::where('stock', '>', '0')->get();
         $suppliers = Supplier::all();
-        return view('products.index', compact("categories", "products", "suppliers"));
+        $usuario = Auth::user();
+        return view('products.index', compact("categories", "products", "suppliers", "usuario"));
     }
 
     public function create()

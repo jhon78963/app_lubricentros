@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Product;
 use App\Models\Employee;
@@ -18,7 +19,8 @@ class SaleController extends Controller
         $products = Product::where('stock', '>', '0') ->orWhere('category_id', '=', 1)->get();
         $employees = Employee::all();
         $sales = Sale::all();
-        return view('sales.index', compact('products', 'employees', 'sales'));
+        $usuario = Auth::user();
+        return view('sales.index', compact('products', 'employees', 'sales', 'usuario'));
     }
 
     public function store(Request $request)
@@ -88,6 +90,7 @@ class SaleController extends Controller
 
     public function show($id)
     {
+        $usuario = Auth::user();
         $date = new DateTime();
         $date = $date->format("d/m/Y");
         $mp = DB::table('sales as s')->where('s.id', $id)->first();
@@ -110,9 +113,7 @@ class SaleController extends Controller
         }else if($sale->id > 99999 && $sale->id < 1000000){
             $num_venta = "#".$sale->id;
         }
-
-
-        return view('sales.show', compact('date', 'num_venta', 'sale', 'mp', 'sale_details'));
+        return view('sales.show', compact('date', 'num_venta', 'sale', 'mp', 'sale_details', 'usuario'));
     }
 
     public function edit($id)

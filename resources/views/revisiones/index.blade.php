@@ -59,6 +59,8 @@
                                                     <td class="text-center">
                                                         <a href="{{ route('revisiones.show', $revision->id) }}"
                                                             class="btn btn-info">Ver</a>
+                                                        <a href="{{ route('revisiones.pdf', $revision->id) }}"
+                                                            target="_blank" class="btn btn-primary">PDF</a>
                                                     </td>
                                                 </tr>
                                             @endforeach

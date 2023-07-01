@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->string('date_order');
             $table->string('total_payment');
-            $table->integer('supplier_id')->nullable();
+            $table->unsignedBigInteger('supplier_id')->nullable();
             $table->foreign('supplier_id')->references('id')->on('suppliers');
             $table->timestamps();
         });

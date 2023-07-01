@@ -15,7 +15,7 @@ return new class extends Migration
             $table->decimal('purchase_price', $precision = 8, $scale = 2);
             $table->decimal('sale_price', $precision = 8, $scale = 2);
             $table->integer('stock');
-            $table->integer('category_id')->nullable();
+            $table->unsignedBigInteger('category_id')->nullable();
             $table->foreign('category_id')->references('id')->on('categories');
             $table->timestamps();
         });

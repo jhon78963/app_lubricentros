@@ -70,9 +70,9 @@
                             Gestión
                         </a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Cliente</a>
-                            <a class="dropdown-item" href="#">Personal</a>
-                            <a class="dropdown-item" href="#">Proveedor</a>
+                            <a class="dropdown-item" href="{{ route('customers.index') }}">Cliente</a>
+                            <a class="dropdown-item" href="{{ route('employees.index') }}">Personal</a>
+                            <a class="dropdown-item" href="{{ route('suppliers.index') }}">Proveedor</a>
                         </div>
                     </li>
                     <li class="nav-item active">
@@ -93,7 +93,7 @@
                             Reporte
                         </a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Ventas</a>
+                            <a class="dropdown-item" href="{{ route('reports.sale') }}">Ventas</a>
                         </div>
                     </li>
                 </ul>

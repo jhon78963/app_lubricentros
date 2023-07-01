@@ -28,6 +28,6 @@ function productChange() {
         $('#prod_stock').val(data.stock);
         $('#prod_id').val(data.id);
         $('#prod_name').val(data.name);
-        $('#prod_priceRatail').val(data.price);
+        $('#prod_priceRatail').val(data.sale_price);
     });
 }

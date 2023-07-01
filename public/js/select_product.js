@@ -43,7 +43,7 @@ function productOrderChange() {
             $('#cate_id').val(data.category_id).trigger('change');
             $('#prod_name').attr("readonly", true);
             $('#cate_id').attr("disabled", true);
-        } else {
+        } else {c
             $('#prod_name').attr("readonly", false);
             $('#prod_priceWholeSale').attr("readonly", false);
             $('#prod_purchasePrice').attr("readonly", false);

@@ -62,6 +62,8 @@
                                                 <td class="text-center">
                                                     <a href="{{ route('sales.show', $sale->id) }}"
                                                         class="btn btn-info">Ver</a>
+                                                    <a href="{{ route('sales.pdf', $sale->id) }}" target="_blank"
+                                                        class="btn btn-primary">PDF</a>
                                                 </td>
                                             </tr>
                                         @endforeach

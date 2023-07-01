@@ -13,9 +13,9 @@ return new class extends Migration
             $table->string('date_payment');
             $table->string('method_payment');
             $table->string('total_payment');
-            $table->integer('customer_id')->nullable();
+            $table->unsignedBigInteger('customer_id')->nullable();
             $table->foreign('customer_id')->references('id')->on('customers');
-            $table->integer('employee_id')->nullable();
+            $table->unsignedBigInteger('employee_id')->nullable();
             $table->foreign('employee_id')->references('id')->on('employees');
             $table->timestamps();
         });

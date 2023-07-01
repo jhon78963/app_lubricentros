@@ -11,9 +11,7 @@ return new class extends Migration
         Schema::create('user_roles', function (Blueprint $table) {
             $table->id();
             $table->integer('role_id')->nullable();
-            $table->foreign('role_id')->references('id')->on('roles');
             $table->integer('user_id')->nullable();
-            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

@@ -322,14 +322,14 @@
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <label for="category_name">Precio de Compra</label>
-                                                <input type="text" class="form-control" name="price"
+                                                <input type="text" class="form-control" name="purchase_price"
                                                     id="update_purchase_price">
                                             </div>
                                         </div>
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <label for="category_name">Precio de Venta</label>
-                                                <input type="text" class="form-control" name="price"
+                                                <input type="text" class="form-control" name="sale_price"
                                                     id="update_sale_price">
                                             </div>
                                         </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Category;
 use DataTables;
@@ -22,6 +23,8 @@ class CategoryController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
+        $usuario = Auth::user();
+        return view("categories.index", compact("usuario"));
     }
 
     public function create()

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Vehiculo;
 use App\Models\Revision;
@@ -13,10 +14,10 @@ class RevisionController extends Controller
     {
         $revisiones = DB::table('revisiones as r')
             ->join('vehiculos as v', 'r.placa', 'v.placa')
-            ->select(DB::raw("TO_CHAR(r.created_at, 'DD-MM-YYYY HH:MI:SS') AS fecha"), 'v.placa', 'v.propietario', 'v.tipo', 'r.id')
+            ->select(DB::raw("FORMAT(r.created_at, 'DD-MM-YYYY HH:MI:SS') AS fecha"), 'v.placa', 'v.propietario', 'v.tipo', 'r.id')
             ->get();
-
-        return view('revisiones.index', compact('revisiones'));
+        $usuario = Auth::user();
+        return view('revisiones.index', compact('revisiones', 'usuario'));
     }
 
     public function store(Request $request)
@@ -56,10 +57,11 @@ class RevisionController extends Controller
 
     public function show($id)
     {
+        $usuario = Auth::user();
         $revision = DB::table('revisiones as r')
             ->join('vehiculos as v', 'r.placa', 'v.placa')
             ->where('r.id', $id)
             ->first();
-        return view('revisiones.show', compact('revision'));
+        return view('revisiones.show', compact('revision', 'usuario'));
     }
 }
