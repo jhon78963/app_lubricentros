@@ -102,7 +102,7 @@
                     <li class="nav-item dropdown active">
                         <a class="nav-link dropdown-toggle user-profile" href="#" role="button"
                             data-toggle="dropdown" aria-expanded="false"><img
-                                src="{{ asset($usuario->profilePicture) }}" alt=""
+                                src="/{{ asset($usuario->profilePicture) }}" alt=""
                                 id="photo_navbar">{{ $usuario->username }}
                         </a>
                         <div class="dropdown-menu">

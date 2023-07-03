@@ -62,6 +62,7 @@ class RevisionController extends Controller
             ->join('vehiculos as v', 'r.placa', 'v.placa')
             ->where('r.id', $id)
             ->first();
+
         return view('revisiones.show', compact('revision', 'usuario'));
     }
 }

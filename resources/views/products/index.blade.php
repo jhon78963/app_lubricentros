@@ -937,7 +937,7 @@
     <!-- Redireccionar detalle -->
     <script>
         function goShow(orde_id) {
-            window.location.href = 'orders/' + orde_id;
+            window.location.href = '/orders/' + orde_id;
         }
     </script>
 @endsection

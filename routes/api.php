@@ -24,6 +24,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('product/{id}', function($id) {
     return Product::find($id);
 });
+Route::get('product/search/{id}', function($id) {
+    return DB::table('products')
+        ->where('code_bar', $id)
+        ->first();
+});
 
 Route::get('product/order/{id}', function($id){
     return DB::table('products')->where('id', $id)->get();

@@ -81,7 +81,8 @@ Route::get('products/eliminar/{id}', [ProductController::class, 'eliminar'])->na
 
 // sales
 Route::get('sales', [SaleController::class, 'index'])->name('sales.index');
-Route::post('sales', [SaleController::class, 'store'])->name('sales.store');
+// Route::post('sales', [SaleController::class, 'store'])->name('sales.store');
+Route::post('sales/guardar', [SaleController::class, 'store'])->name('sales.guardar');
 Route::get('sales/show/{id}', [SaleController::class, 'show'])->name('sales.show');
 
 // orders

@@ -29,15 +29,27 @@ $(document).ready(function () {
         var prod_name = document.getElementById("prod_name").value;
 
         var sale_unitprice = document.getElementById("sale_unitprice").value;
-        if (sale_unitprice == '' || sale_unitprice <= 0) {
-            mostrarMensajeError("Por favor ingrese precio de venta valido");
+        if (sale_unitprice == '' || sale_unitprice == null) {
+            mostrarMensajeError("El campo Precio Unitario es requerido");
+            return false;
+        }
+        if ( sale_unitprice <= 0) {
+            mostrarMensajeError("Por favor debe escribir precio del producto mayor a 0");
+            return false;
+        }
+        if (!/^\d+(\.\d+)?$/.test(sale_unitprice)) {
+            mostrarMensajeError("Por favor ingrese solo valores numéricos en el precio del producto");
             return false;
         }
 
         var sale_quantity = document.getElementById("sale_cantidad").value;
         var prod_stock = document.getElementById("prod_stock").value;
-        if (sale_quantity == '' || Number(sale_quantity) == 0 || sale_quantity == null) {
-            mostrarMensajeError("Por favor ingrese cantidad del producto");
+        if (sale_quantity == '' || sale_quantity == null) {
+            mostrarMensajeError("El campo Cantidad es requerido");
+            return false;
+        }
+        if (!/^\d+(\.\d+)?$/.test(sale_quantity)) {
+            mostrarMensajeError("Por favor ingrese solo valores numéricos en la cantidad del producto");
             return false;
         }
         if (sale_quantity <= 0) {

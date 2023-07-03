@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Category;
 use App\Models\Product;
@@ -87,6 +88,7 @@ class OrderController extends Controller
 
     public function show($id)
     {
+        $usuario = Auth::user();
         $date = new DateTime();
         $date = $date->format("d/m/Y");
         $order_details = DB::table('order_details')->where('order_id', $id)->get();
@@ -106,7 +108,7 @@ class OrderController extends Controller
         }
 
 
-        return view('orders.show', compact('date', 'num_compra', 'order', 'order_details'));
+        return view('orders.show', compact('date', 'num_compra', 'order', 'order_details', 'usuario'));
     }
 
     public function edit(int $id)

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Product;
@@ -10,17 +11,41 @@ use App\Models\Employee;
 use App\Models\Customer;
 use App\Models\Sale;
 use App\Models\SaleDetail;
+use Carbon\Carbon;
+use DataTables;
 use DateTime;
 
 class SaleController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        if($request->ajax()){
+            $mes = Carbon::now();
+            $mes = $mes->format('m');
+            $año = Carbon::now();
+            $año = $año->format('Y');
+            $sales = DB::table('sales as s')
+                    ->join('employees as e', 's.employee_id', 'e.id')
+                    ->select('s.id', 's.total_payment','s.method_payment', DB::raw("CONCAT(e.name, ' ',e.lastname) AS full_name, DATE_FORMAT(s.date_payment, '%d %b, %Y %h:%i %p') as date_payment"))
+                    ->where(DB::raw("DATE_FORMAT(s.date_payment, '%Y')"), $año)
+                    ->where(DB::raw("DATE_FORMAT(s.date_payment, '%m')"), $mes)
+                    ->orderBy('id', 'DESC')
+                    ->get();
+
+            return DataTables::of($sales)
+                ->addColumn('action', function($sales){
+                    $acciones = '<a href="/sales/show/'.$sales->id.'" class="btn btn-info btn-sm"> Mostrar </a>';
+                    $acciones .= '<a href="/download-sales/'.$sales->id.'" target="_blank" class="btn btn-primary btn-sm"> PDF </a>';
+                    return $acciones;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+
         $products = Product::where('stock', '>', '0') ->orWhere('category_id', '=', 1)->get();
         $employees = Employee::all();
-        $sales = Sale::all();
         $usuario = Auth::user();
-        return view('sales.index', compact('products', 'employees', 'sales', 'usuario'));
+        return view('sales.index', compact('products', 'employees', 'usuario'));
     }
 
     public function store(Request $request)
@@ -31,15 +56,11 @@ class SaleController extends Controller
             $last_sale_id = 1;
         }
 
-        $date = new DateTime();
-        $date = $date->format("Y-m-d");
-
         $sale = new Sale();
         $sale->id = $last_sale_id;
         $sale->total_payment = $request->total_save;
         $sale->employee_id = $request->empl_id;
         $sale->method_payment = $request->pmet_id;
-        $sale->date_payment = $date;
 
         if($request->cust_dni != null){
 
@@ -84,8 +105,10 @@ class SaleController extends Controller
             DB::table('products')->where('id', $request->sale_prod_ids[$i])->decrement('stock', $request->sale_quantities[$i]);
         }
 
-        return redirect()->route('sales.index')->with('datos', 'Venta registrada con exito ...!');
-
+        return \Response::json([
+            "mensaje" => "Venta registrada con exito ...!",
+            "sale_id" => $last_sale_id,
+        ]);
     }
 
     public function show($id)

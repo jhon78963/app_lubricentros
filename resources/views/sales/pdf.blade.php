@@ -1,107 +1,191 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Venta</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <title>Ticket de Venta</title>
+    <style>
+        @page {
+            size: 105mm 160mm;
+            /* Ancho y alto del ticket */
+            margin: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            margin: 0;
+            padding: 10px;
+            line-height: 1.4;
+            text-align: center;
+        }
+
+        .header {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .body {
+            font-weight: bold;
+            font-size: 11px;
+            margin-bottom: 10px;
+        }
+
+        .info {
+            margin-bottom: 10px;
+        }
+
+        .item-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            border-bottom: 1px #ccc;
+        }
+
+        .item-row:last-child {
+            border-bottom: none;
+        }
+
+        .item-name {
+            flex: 1;
+            text-align: left;
+        }
+
+        .item-quantity,
+        .item-price {
+            flex: 0.3;
+            text-align: left;
+        }
+
+        .subtotal-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            border-top: 1px;
+            padding-top: 5px;
+        }
+
+        .total-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-top: 10px;
+            border-top: 1px solid #000;
+            padding-top: 5px;
+        }
+
+        .table-row {
+            border-bottom: 1px solid #000;
+        }
+
+        .total-label {
+            font-weight: bold;
+            flex: 1;
+            text-align: right;
+        }
+
+        .total-value {
+            font-weight: bold;
+            flex: 0.5;
+            text-align: right;
+            white-space: pre-line;
+        }
+
+        text {
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
-
-
-    <div class="row">
-        <div class="col-12">
-            <h4>
-                <i class="fas fa-globe"></i> Lubricentros C&D
-                <b>Venta {{ $num_venta }}</b>
-                <small class="float-right">Fecha: {{ $date }}</small>
-            </h4>
-        </div>
-        <!-- /.col -->
+    <div class="header">NOVEDADES MARITEX</div>
+    <div class="info">
+        <strong>Mercado Mayorista Puesto C-74</strong>
+        <br>
+        <strong>Trujillo - La Libertad</strong>
+        <br>
+        <strong>Cel: 900057350</strong>
+        <br>
+        <strong>Email: novedadesmaritex@gmail.com</strong>
     </div>
-    <!-- info row -->
-    <div class="row">
-        <div class="col-4">
-            De
-            <address>
-                <strong>Lubricentros C&D</strong><br>
-                13006, Av. America<br>
-                Trujillo 13006<br>
-                Celular: +51 990638706<br>
-                Email: lubricentrosc&d@gmail.com
-            </address>
-            <b>Fecha de pago:</b> {{ Carbon\Carbon::parse($sale->date_payment)->format('d/m/Y') }}<br>
-            <b>Metodo de Pago:</b> Contado
-        </div>
+
+    <div class="total-row"></div>
+
+    <div class="header">NOTA DE VENTA ELECTRÓNICA</div>
+    <div class="body">
+        N001 - {{ $nro_venta }}
+        <br>
+        Fecha de emisión: {{ $fecha }}
+        <br>
+        Señor(a): {{ $clie_nombre }}
+        <br>
+        @if ($clie_dni != null)
+            {{ $clie_dni }}
+        @endif
     </div>
-    <br>
-    <!-- /.row -->
 
-    <!-- Table row -->
-    <div class="row">
-        <div class="col-12 table-responsive">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th class="text-center">Cant.</th>
-                        <th class="text-center">Mercadería</th>
-                        <th class="text-center">Cod. #</th>
-                        <th class="text-center">Subtotal</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($sale_details as $sale_detail)
-                        <tr>
-                            <td class="text-center">{{ $sale_detail->quantity }}</td>
-                            <td class="text-center">{{ $sale_detail->name }}</td>
-                            <td class="text-center">{{ $sale_detail->id }}</td>
-                            <td class="text-center">S/. {{ $sale_detail->totalprice }}</td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-        <!-- /.col -->
+    <div class="total-row"></div>
+
+    <div class="item-row table-row">
+        <div class="item-quantity" style="font-weight: bold;">Cant.</div>
+        <div class="item-name" style="font-weight: bold;">Descripción</div>
+        <div class="item-price" style="font-weight: bold;">Precio</div>
+        <div class="item-price" style="font-weight: bold;">Importe</div>
     </div>
-    <!-- /.row -->
-
-    <div class="row">
-        <!-- accepted payments column -->
-        <div class="col-6">
-
-        </div>
-        <!-- /.col -->
-        <div class="col-6">
-            <p class="lead">Monto Pagado
-                {{ Carbon\Carbon::parse($sale->date_payment)->format('d/m/Y') }}</p>
-
-            <div class="table-responsive">
-                <table class="table">
-                    <tr>
-                        <th style="width:50%">Subtotal:</th>
-                        <td>S/. {{ $sale->total_payment }}</td>
-                    </tr>
-                    <tr>
-                        <th>IGV (18%)</th>
-                        <td>S/. 0</td>
-                    </tr>
-                    <tr>
-                        <th>Envío:</th>
-                        <td>S/. 0</td>
-                    </tr>
-                    <tr>
-                        <th>Total:</th>
-                        <td>S/. {{ $sale->total_payment }}</td>
-                    </tr>
-                </table>
+    <div class="table-row">
+        @foreach ($productos as $producto)
+            <div class="item-row">
+                <div class="item-quantity" style="font-weight: bold;">{{ $producto->sdet_quantity }}</div>
+                <div class="item-name" style="font-weight: bold;">{{ $producto->prod_name }}</div>
+                <div class="item-price" style="font-weight: bold;">S/ {{ $producto->sdet_unitprice }}</div>
+                <div class="item-price" style="font-weight: bold;">S/ {{ $producto->sdet_totalprice }}</div>
             </div>
+        @endforeach
+    </div>
+    <div style="margin-top: 10px;">
+        <div class="subtotal-row">
+            <div class="total-label">SubTotal:</div>
+            <div class="total-value">S/ {!! number_format((float) $op_grabada, 2) !!}</div>
+        </div>
+        <div class="subtotal-row">
+            <div class="total-label">IGV (18%):</div>
+            <div class="total-value">{!! number_format((float) $igv, 2) !!}</div>
+        </div>
+        <div class="subtotal-row">
+            <div class="total-label">TOTAL:</div>
+            <div class="total-value">{!! number_format((float) $total, 2) !!}</div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <div class="total-row"></div>
+
+    <div class="body" style="text-align: left; font-weight: bold;">
+        SON: {{ $enLetras->numletras($total, 'SOLES') }}
+    </div>
+
+    <div class="total-row"></div>
+
+    <div class="body" style="margin-bottom: 5px;">
+        <div style="margin-top: 10px; font-weight: bold;">
+            Pago: {{ $metodo }}
+            <br>
+            Atendido por: {{ $empl_nombre }}
+            <br>
+
+            Gracias por su compra
+            <br>
+        </div>
+
+        <div style="margin-top: 10px">
+            {!! DNS2D::getBarcodeSVG($codebar, 'QRCODE') !!}
+        </div>
+
+    </div>
+
+
 </body>
 
 </html>
